@@ -16,6 +16,9 @@ class SimpleTextWriter extends Writer
             case 'Qafoo\\SerPretty\\Node\\IntegerNode':
                 return $this->writeInteger($node);
 
+            case 'Qafoo\\SerPretty\\Node\\FloatNode':
+                return $this->writeFloat($node);
+
             case 'Qafoo\\SerPretty\\Node\\ArrayNode':
                 return $this->writeArray($node);
 
@@ -38,6 +41,14 @@ class SimpleTextWriter extends Writer
         return sprintf(
             'int(%s)',
             $integerNode->getContent()
+        );
+    }
+
+    private function writeFloat(Node\FloatNode $floatNode)
+    {
+        return sprintf(
+            'double(%s)',
+            $floatNode->getContent()
         );
     }
 

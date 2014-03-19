@@ -29,6 +29,14 @@ class SimpleTextWriterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testWriteFloat()
+    {
+        $this->assertEquals(
+            'double(42.5)',
+            $this->writer->write(new Node\FloatNode(42.5))
+        );
+    }
+
     public function testWriteArray()
     {
         $this->assertEquals(
