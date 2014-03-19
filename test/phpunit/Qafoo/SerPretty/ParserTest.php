@@ -80,4 +80,43 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testParseNestedArray()
+    {
+        $this->assertEquals(
+            new Node\ArrayNode(
+                array(
+                    new Node\ArrayElementNode(
+                        new Node\ArrayNode(
+                            array(
+                                new Node\ArrayElementNode(
+                                    new Node\String('foo'),
+                                    new Node\Integer(0)
+                                ),
+                            )
+                        ),
+                        new Node\String('a')
+                    ),
+                    new Node\ArrayElementNode(
+                        new Node\ArrayNode(
+                            array(
+                                new Node\ArrayElementNode(
+                                    new Node\String('bar'),
+                                    new Node\Integer(23)
+                                ),
+                            )
+                        ),
+                        new Node\String('b')
+                    )
+                )
+            ),
+            $this->parser->parse(
+                serialize(
+                    array(
+                        'a' => array('foo'),
+                        'b' => array(23 => 'bar'))
+                )
+            )
+        );
+    }
 }
