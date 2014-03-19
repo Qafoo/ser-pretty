@@ -1,5 +1,5 @@
 {
-    "name": "Qafoo/SerPretty",
+    "name": "qafoo/ser-pretty",
     "description": "Pretty print serialized PHP data",
     "homepage": "https://github.com/Qafoo/ser-pretty",
     "license": "MIT",

@@ -43,4 +43,4 @@ you can use out of the box.
 
 ## Installation
 
-Just include ser-pretty in your project via composer using `Qafoo/SerPretty`.
+Just include ser-pretty in your project via composer using `qafoo/ser-pretty`.
