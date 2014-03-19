@@ -1,5 +1,8 @@
 {
     "name": "Qafoo/SerPretty",
+    "description": "Pretty print serialized PHP data",
+    "homepage": "https://github.com/Qafoo/ser-pretty",
+    "license": "MIT",
     "minimum-stability": "stable",
     "version": "1.0.0-alpha",
 
@@ -15,5 +18,6 @@
 
     "config": {
         "bin-dir": "vendor/bin/"
-    }
+    },
+    "bin": ["src/bin/ser-pretty"]
 }
