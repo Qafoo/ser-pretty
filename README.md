@@ -1,7 +1,7 @@
-# ser-pretty - Pretty print serialized PHP data
+# ser-pretty
 
-ser-pretty allows you to pretty print serialized PHP data without unserializing
-it. Therefore, you do not need to have the classes of serialized objects loaded.
+**ser-pretty allows you to pretty print serialized PHP data without unserializing
+it. Therefore, you do not need to have the classes of serialized objects loaded.**
 
 ## But, why?
 
