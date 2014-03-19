@@ -35,6 +35,14 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testParseFloat()
+    {
+        $this->assertEquals(
+            new Node\FloatNode(42.5),
+            $this->parser->parse(serialize(42.5))
+        );
+    }
+
     public function testParseArray()
     {
         $this->assertEquals(
@@ -45,14 +53,14 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                         new Node\IntegerNode(0)
                     ),
                     new Node\ArrayElementNode(
-                        new Node\StringNode('bar'),
+                        new Node\FloatNode(42.5),
                         new Node\IntegerNode(1)
                     )
                 )
             ),
             $this->parser->parse(
                 serialize(
-                    array('foo', 'bar')
+                    array('foo', 42.5)
                 )
             )
         );

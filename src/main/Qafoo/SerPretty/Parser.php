@@ -61,6 +61,8 @@ class Parser
                     return $this->parseArray();
                 case 'O':
                     return $this->parseObject();
+                case 'd':
+                    return $this->parseFloat();
 
                 default:
                     throw new \RuntimeException(
@@ -185,6 +187,22 @@ class Parser
         }
 
         return new Node\ObjectNode($attributes, $className);
+    }
+
+    /**
+     * d:42.5;
+     */
+    private function parseFloat()
+    {
+        $this->advance(2);
+
+        $float = '';
+        do {
+            $float .= $this->current();
+            $this->advance();
+        } while ($this->current() != ';');
+
+        return new Node\FloatNode((float) $float);
     }
 
     /**
