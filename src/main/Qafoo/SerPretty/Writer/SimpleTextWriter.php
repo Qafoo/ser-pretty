@@ -24,6 +24,20 @@ class SimpleTextWriter extends Writer
 
             case 'Qafoo\\SerPretty\\Node\\ObjectNode':
                 return $this->writeObject($node);
+
+            case 'Qafoo\\SerPretty\\Node\\NullNode':
+                return $this->writeNull();
+
+            case 'Qafoo\\SerPretty\\Node\\BooleanNode':
+                return $this->writeBoolean($node);
+
+            default:
+                throw new \RuntimeException(
+                    sprintf(
+                        'Unknown node type "%s"',
+                        get_class($node)
+                    )
+                );
         }
     }
 
@@ -41,6 +55,19 @@ class SimpleTextWriter extends Writer
         return sprintf(
             'int(%s)',
             $integerNode->getContent()
+        );
+    }
+
+    private function writeNull()
+    {
+        return 'null';
+    }
+
+    private function writeBoolean(Node\BooleanNode $integerNode)
+    {
+        return sprintf(
+            'bool(%s)',
+            $integerNode->getContent() ? 'true' : 'false'
         );
     }
 

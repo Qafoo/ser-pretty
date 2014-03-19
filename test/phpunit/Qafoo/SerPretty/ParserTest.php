@@ -11,6 +11,27 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $this->parser = new Parser();
     }
 
+    public function testParseNull()
+    {
+        $this->assertEquals(
+            new Node\NullNode(),
+            $this->parser->parse(serialize(null))
+        );
+    }
+
+    public function testParseBoolean()
+    {
+        $this->assertEquals(
+            new Node\BooleanNode(true),
+            $this->parser->parse(serialize(true))
+        );
+
+        $this->assertEquals(
+            new Node\BooleanNode(false),
+            $this->parser->parse(serialize(false))
+        );
+    }
+
     public function testParseString()
     {
         $this->assertEquals(
