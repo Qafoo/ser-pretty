@@ -15,4 +15,4 @@ if (!empty($_SERVER['argv'][1])) {
 }
 
 $node = $parser->parse($contents);
-echo $writer->write($node);
+echo $writer->write($node) . "\n";
