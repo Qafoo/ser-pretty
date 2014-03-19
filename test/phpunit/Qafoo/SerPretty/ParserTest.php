@@ -14,7 +14,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     public function testParseString()
     {
         $this->assertEquals(
-            new Node\String('foo'),
+            new Node\StringNode('foo'),
             $this->parser->parse(serialize('foo'))
         );
     }
@@ -22,7 +22,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     public function testParseInteger()
     {
         $this->assertEquals(
-            new Node\Integer(23),
+            new Node\IntegerNode(23),
             $this->parser->parse(serialize(23))
         );
     }
@@ -30,7 +30,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
     public function testParseSingleDigitInteger()
     {
         $this->assertEquals(
-            new Node\Integer(7),
+            new Node\IntegerNode(7),
             $this->parser->parse(serialize(7))
         );
     }
@@ -41,12 +41,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             new Node\ArrayNode(
                 array(
                     new Node\ArrayElementNode(
-                        new Node\String('foo'),
-                        new Node\Integer(0)
+                        new Node\StringNode('foo'),
+                        new Node\IntegerNode(0)
                     ),
                     new Node\ArrayElementNode(
-                        new Node\String('bar'),
-                        new Node\Integer(1)
+                        new Node\StringNode('bar'),
+                        new Node\IntegerNode(1)
                     )
                 )
             ),
@@ -64,12 +64,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             new Node\ArrayNode(
                 array(
                     new Node\ArrayElementNode(
-                        new Node\String('foo'),
-                        new Node\String('a')
+                        new Node\StringNode('foo'),
+                        new Node\StringNode('a')
                     ),
                     new Node\ArrayElementNode(
-                        new Node\String('bar'),
-                        new Node\String('b')
+                        new Node\StringNode('bar'),
+                        new Node\StringNode('b')
                     )
                 )
             ),
@@ -90,23 +90,23 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                         new Node\ArrayNode(
                             array(
                                 new Node\ArrayElementNode(
-                                    new Node\String('foo'),
-                                    new Node\Integer(0)
+                                    new Node\StringNode('foo'),
+                                    new Node\IntegerNode(0)
                                 ),
                             )
                         ),
-                        new Node\String('a')
+                        new Node\StringNode('a')
                     ),
                     new Node\ArrayElementNode(
                         new Node\ArrayNode(
                             array(
                                 new Node\ArrayElementNode(
-                                    new Node\String('bar'),
-                                    new Node\Integer(23)
+                                    new Node\StringNode('bar'),
+                                    new Node\IntegerNode(23)
                                 ),
                             )
                         ),
-                        new Node\String('b')
+                        new Node\StringNode('b')
                     )
                 )
             ),
@@ -128,12 +128,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             new Node\ObjectNode(
                 array(
                     new Node\AttributeNode(
-                        new Node\Integer(23),
+                        new Node\IntegerNode(23),
                         'Qafoo\SerPretty\TestClass',
                         'foo'
                     ),
                     new Node\AttributeNode(
-                        new Node\String('baz'),
+                        new Node\StringNode('baz'),
                         null,
                         'bar'
                     )
@@ -169,12 +169,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                                     new Node\ArrayNode(
                                         array(
                                             new Node\ArrayElementNode(
-                                                new Node\String('foobar'),
-                                                new Node\Integer(0)
+                                                new Node\StringNode('foobar'),
+                                                new Node\IntegerNode(0)
                                             ),
                                             new Node\ArrayElementNode(
-                                                new Node\String('bar'),
-                                                new Node\String('foo')
+                                                new Node\StringNode('bar'),
+                                                new Node\StringNode('foo')
                                             ),
                                         )
                                     ),
@@ -196,7 +196,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                         'foo'
                     ),
                     new Node\AttributeNode(
-                        new Node\Integer(23),
+                        new Node\IntegerNode(23),
                         null,
                         'bar'
                     )

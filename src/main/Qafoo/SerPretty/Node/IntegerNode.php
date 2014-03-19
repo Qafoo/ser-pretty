@@ -4,15 +4,15 @@ namespace Qafoo\SerPretty\Node;
 
 use Qafoo\SerPretty\Node;
 
-class Integer extends Node
+class IntegerNode extends Node
 {
     /**
-     * @var string
+     * @var int
      */
     private $content;
 
     /**
-     * @param string $content
+     * @param int $content
      */
     public function __construct($content)
     {

@@ -71,7 +71,7 @@ class Parser
         // Skip "\";"
         $this->advance(2);
 
-        return new Node\String($string);
+        return new Node\StringNode($string);
     }
 
     private function parseRawString()
@@ -101,7 +101,7 @@ class Parser
 
         $this->advance(1);
 
-        return new Node\Integer($integer);
+        return new Node\IntegerNode($integer);
     }
 
     /**
@@ -161,7 +161,7 @@ class Parser
         return new Node\ObjectNode($attributes, $className);
     }
 
-    private function parseAttributeName(Node\String $stringNode)
+    private function parseAttributeName(Node\StringNode $stringNode)
     {
         $nameString = $stringNode->getContent();
 

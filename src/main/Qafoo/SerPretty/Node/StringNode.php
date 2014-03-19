@@ -4,7 +4,7 @@ namespace Qafoo\SerPretty\Node;
 
 use Qafoo\SerPretty\Node;
 
-class String extends Node
+class StringNode extends Node
 {
     /**
      * @var string
