@@ -25,6 +25,14 @@ class Parser
     private $debug = false;
 
     /**
+     * @param bool $debug
+     */
+    public function __construct($debug = false)
+    {
+        $this->debug = $debug;
+    }
+
+    /**
      * @param string $serialized
      * @return Node
      */
