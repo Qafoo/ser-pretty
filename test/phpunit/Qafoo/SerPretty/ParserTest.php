@@ -57,4 +57,27 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testParseAssociativeArray()
+    {
+        $this->assertEquals(
+            new Node\ArrayNode(
+                array(
+                    new Node\ArrayElementNode(
+                        new Node\String('foo'),
+                        new Node\String('a')
+                    ),
+                    new Node\ArrayElementNode(
+                        new Node\String('bar'),
+                        new Node\String('b')
+                    )
+                )
+            ),
+            $this->parser->parse(
+                serialize(
+                    array('a' => 'foo', 'b' => 'bar')
+                )
+            )
+        );
+    }
 }
