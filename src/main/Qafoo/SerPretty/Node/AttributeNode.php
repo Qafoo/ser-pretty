@@ -36,4 +36,14 @@ class AttributeNode extends Node
     {
         return $this->content;
     }
+
+    public function getClassName()
+    {
+        return $this->className;
+    }
+
+    public function getPropertyName()
+    {
+        return $this->propertyName;
+    }
 }

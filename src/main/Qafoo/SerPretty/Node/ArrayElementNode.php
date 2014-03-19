@@ -30,4 +30,9 @@ class ArrayElementNode extends Node
     {
         return $this->content;
     }
+
+    public function getKey()
+    {
+        return $this->key;
+    }
 }

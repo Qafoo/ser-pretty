@@ -23,6 +23,11 @@ class ObjectNode extends Node
 
     public function getContent()
     {
-        return $this->content;
+        return $this->attributes;
+    }
+
+    public function getClassName()
+    {
+        return $this->className;
     }
 }
