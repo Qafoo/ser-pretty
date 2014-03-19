@@ -145,4 +145,65 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testParseComplexObject()
+    {
+        $complexObject = new TestClass();
+
+        $childObject = new TestClass();
+        $childObject->setFoo(array('foobar', 'foo' => 'bar'));
+        $childObject->setBar(new \stdClass());
+
+        $complexObject->setFoo($childObject);
+        $complexObject->setBar(23);
+
+        $this->assertEquals(
+            // $complexObject
+            new Node\ObjectNode(
+                array(
+                    new Node\AttributeNode(
+                        // $childObject
+                        new Node\ObjectNode(
+                            array(
+                                new Node\AttributeNode(
+                                    new Node\ArrayNode(
+                                        array(
+                                            new Node\ArrayElementNode(
+                                                new Node\String('foobar'),
+                                                new Node\Integer(0)
+                                            ),
+                                            new Node\ArrayElementNode(
+                                                new Node\String('bar'),
+                                                new Node\String('foo')
+                                            ),
+                                        )
+                                    ),
+                                    'Qafoo\SerPretty\TestClass',
+                                    'foo'
+                                ),
+                                new Node\AttributeNode(
+                                    new Node\ObjectNode(
+                                        array(),
+                                        'stdClass'
+                                    ),
+                                    null,
+                                    'bar'
+                                ),
+                            ),
+                            'Qafoo\\SerPretty\\TestClass'
+                        ),
+                        'Qafoo\SerPretty\TestClass',
+                        'foo'
+                    ),
+                    new Node\AttributeNode(
+                        new Node\Integer(23),
+                        null,
+                        'bar'
+                    )
+                ),
+                'Qafoo\\SerPretty\\TestClass'
+            ),
+            $this->parser->parse(serialize($complexObject))
+        );
+    }
 }
