@@ -1,0 +1,12 @@
+#!/usr/bin/env php
+<?php
+
+namespace Qafoo\SerPretty;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+$parser = new Parser();
+$writer = new Writer\SimpleTextWriter();
+
+$node = $parser->parse(file_get_contents('php://stdin'));
+echo $writer->write($node);
