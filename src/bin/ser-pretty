@@ -21,5 +21,11 @@ if ((!$loader = includeIfExists(__DIR__.'/../../vendor/autoload.php')) && (!$loa
 $parser = new Parser();
 $writer = new Writer\SimpleTextWriter();
 
-$node = $parser->parse(file_get_contents('php://stdin'));
-echo $writer->write($node);
+if (!empty($_SERVER['argv'][1])) {
+    $contents = file_get_contents($_SERVER['argv'][1]);
+} else {
+    $contents = file_get_contents('php://stdin');
+}
+
+$node = $parser->parse($contents);
+echo $writer->write($node) . "\n";
