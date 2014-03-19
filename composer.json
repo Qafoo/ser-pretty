@@ -1,0 +1,19 @@
+{
+    "name": "Qafoo/SerPretty",
+    "minimum-stability": "stable",
+    "version": "1.0.0-alpha",
+
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*@stable"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Qafoo\\SerPretty": ["src/main", "test/phpunit"]
+        }
+    },
+
+    "config": {
+        "bin-dir": "vendor/bin/"
+    }
+}
