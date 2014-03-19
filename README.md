@@ -3,6 +3,12 @@
 **ser-pretty allows you to pretty print serialized PHP data without unserializing
 it. Therefore, you do not need to have the classes of serialized objects loaded.**
 
+    $ src/bin/ser-pretty < test.txt 
+      class stdClass (1) {
+        private $bar =>
+        int(223)
+      }
+
 ## But, why?
 
 It happens often that you have serialized PHP data lying around for example
