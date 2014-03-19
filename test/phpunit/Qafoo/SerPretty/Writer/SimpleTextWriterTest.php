@@ -37,6 +37,22 @@ class SimpleTextWriterTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testWriteBoolean()
+    {
+        $this->assertEquals(
+            'bool(true)',
+            $this->writer->write(new Node\BooleanNode(true))
+        );
+    }
+
+    public function testWriteNull()
+    {
+        $this->assertEquals(
+            'null',
+            $this->writer->write(new Node\NullNode(true))
+        );
+    }
+
     public function testWriteArray()
     {
         $this->assertEquals(

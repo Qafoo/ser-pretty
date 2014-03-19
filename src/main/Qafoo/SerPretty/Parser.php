@@ -63,6 +63,10 @@ class Parser
                     return $this->parseObject();
                 case 'd':
                     return $this->parseFloat();
+                case 'N':
+                    return $this->parseNull();
+                case 'b':
+                    return $this->parseBoolean();
 
                 default:
                     throw new \RuntimeException(
@@ -126,6 +130,34 @@ class Parser
         $this->advance(1);
 
         return new Node\IntegerNode($integer);
+    }
+
+    /**
+     * N;
+     *
+     * @return Node\NullNode
+     */
+    private function parseNull()
+    {
+        $this->advance(1);
+
+        return new Node\NullNode();
+    }
+
+    /**
+     * b:1;
+     *
+     * @return Node\BooleanNode
+     */
+    private function parseBoolean()
+    {
+        $this->advance(2);
+
+        $value = (bool) $this->parseRawInt();
+
+        $this->advance(1);
+
+        return new Node\BooleanNode($value);
     }
 
     /**
