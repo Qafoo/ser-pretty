@@ -119,4 +119,30 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testParseObject()
+    {
+        $testObj = new TestClass();
+
+        $this->assertEquals(
+            new Node\ObjectNode(
+                array(
+                    new Node\AttributeNode(
+                        new Node\Integer(23),
+                        'Qafoo\SerPretty\TestClass',
+                        'foo'
+                    ),
+                    new Node\AttributeNode(
+                        new Node\String('baz'),
+                        null,
+                        'bar'
+                    )
+                ),
+                'Qafoo\\SerPretty\\TestClass'
+            ),
+            $this->parser->parse(
+                serialize($testObj)
+            )
+        );
+    }
 }

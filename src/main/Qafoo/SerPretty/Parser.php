@@ -36,13 +36,24 @@ class Parser
     private function doParse()
     {
         while ($this->currentIndex < $this->maxIndex) {
-            switch ($this->serialized[$this->currentIndex]) {
+            $dataType = $this->serialized[$this->currentIndex];
+            switch ($dataType) {
                 case 'i':
                     return $this->parseInt();
                 case 's':
                     return $this->parseString();
                 case 'a':
                     return $this->parseArray();
+                case 'O':
+                    return $this->parseObject();
+
+                default:
+                    throw new \RuntimeException(
+                        sprintf(
+                            'Unknown data type "%s"',
+                            $dataType
+                        )
+                    );
             }
         }
     }
@@ -55,6 +66,16 @@ class Parser
         // Skip ":"
         $this->advance(2);
 
+        $string = $this->parseRawString();
+
+        // Skip "\";"
+        $this->advance(2);
+
+        return new Node\String($string);
+    }
+
+    private function parseRawString()
+    {
         $stringLength = $this->parseRawInt();
 
         // Skip ":\""
@@ -66,10 +87,7 @@ class Parser
             $string .= $this->current();
         }
 
-        // Skip "\";"
-        $this->advance(2);
-
-        return new Node\String($string);
+        return $string;
     }
 
     /**
@@ -110,6 +128,60 @@ class Parser
         return new Node\ArrayNode($array);
     }
 
+    /**
+     * O:25:"Qafoo\SerPretty\TestClass":2:{s:30:"Qafoo\SerPretty\TestClassfoo";i:0;s:3:"bar";s:3:"baz";}
+     */
+    private function parseObject()
+    {
+        $this->advance(2);
+
+        $className = $this->parseRawString();
+
+        $this->advance(3);
+
+        $numAttributes = $this->parseRawInt();
+
+        $this->advance(3);
+
+        $attributes = array();
+        for ($i = 0; $i < $numAttributes; $i++) {
+            list($class, $name) = $this->parseAttributeName(
+                $this->doParse()
+            );
+
+            $this->advance();
+
+            $value = $this->doParse();
+
+            $this->advance();
+
+            $attributes[] = new Node\AttributeNode($value, $class, $name);
+        }
+
+        return new Node\ObjectNode($attributes, $className);
+    }
+
+    private function parseAttributeName(Node\String $stringNode)
+    {
+        $nameString = $stringNode->getContent();
+
+        if (substr($nameString, 0, 1) === "\0") {
+            $nameString = substr($nameString, 1);
+        }
+
+        if (strpos($nameString, "\0")) {
+            return array(
+                substr($nameString, 0, strpos($nameString, "\000")),
+                substr($nameString, strpos($nameString, "\000") + 1)
+            );
+        }
+
+        return array(
+            null,
+            $nameString
+        );
+    }
+
     private function parseRawInt()
     {
         $integer = $this->current();
@@ -128,6 +200,9 @@ class Parser
 
         $this->assertInBounds($numChars);
         $this->currentIndex += $numChars;
+
+        // Debugging
+        $this->current();
     }
 
     private function current()
