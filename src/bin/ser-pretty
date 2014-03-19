@@ -8,5 +8,11 @@ require_once __DIR__ . '/../../vendor/autoload.php';
 $parser = new Parser();
 $writer = new Writer\SimpleTextWriter();
 
-$node = $parser->parse(file_get_contents('php://stdin'));
+if (!empty($_SERVER['argv'][1])) {
+    $contents = file_get_contents($_SERVER['argv'][1]);
+} else {
+    $contents = file_get_contents('php://stdin');
+}
+
+$node = $parser->parse($contents);
 echo $writer->write($node);
