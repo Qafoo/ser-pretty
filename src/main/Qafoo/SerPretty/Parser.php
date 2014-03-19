@@ -24,6 +24,10 @@ class Parser
      */
     private $debug = false;
 
+    /**
+     * @param string $serialized
+     * @return Node
+     */
     public function parse($serialized)
     {
         $this->serialized = $serialized;
@@ -33,6 +37,9 @@ class Parser
         return $this->doParse($serialized);
     }
 
+    /**
+     * @return Node
+     */
     private function doParse()
     {
         while ($this->currentIndex < $this->maxIndex) {
@@ -60,6 +67,8 @@ class Parser
 
     /**
      * s:3:"foo";
+     *
+     * @return Node\StringNode
      */
     private function parseString()
     {
@@ -74,6 +83,9 @@ class Parser
         return new Node\StringNode($string);
     }
 
+    /**
+     * @return string
+     */
     private function parseRawString()
     {
         $stringLength = $this->parseRawInt();
@@ -92,6 +104,8 @@ class Parser
 
     /**
      * i:23;
+     *
+     * @return Node\IntegerNode
      */
     private function parseInt()
     {
@@ -106,6 +120,8 @@ class Parser
 
     /**
      * a:2:{i:0;s:3:"foo";i:1;s:3:"bar";}
+     *
+     * @return Node\ArrayNode
      */
     private function parseArray()
     {
@@ -130,6 +146,8 @@ class Parser
 
     /**
      * O:25:"Qafoo\SerPretty\TestClass":2:{s:30:"Qafoo\SerPretty\TestClassfoo";i:0;s:3:"bar";s:3:"baz";}
+     *
+     * @return Node\ObjectNode
      */
     private function parseObject()
     {
@@ -161,6 +179,10 @@ class Parser
         return new Node\ObjectNode($attributes, $className);
     }
 
+    /**
+     * @param Node\StringNode $stringNode
+     * @return [<string|null>, <string>]
+     */
     private function parseAttributeName(Node\StringNode $stringNode)
     {
         $nameString = $stringNode->getContent();
@@ -182,6 +204,9 @@ class Parser
         );
     }
 
+    /**
+     * @return int
+     */
     private function parseRawInt()
     {
         $integer = $this->current();
@@ -194,6 +219,11 @@ class Parser
         return (int) $integer;
     }
 
+    /**
+     * Advance char cursor by $numChars
+     *
+     * @param int $numChars
+     */
     private function advance($numChars = 1)
     {
         $this->debug("Advance $numChars");
@@ -205,6 +235,11 @@ class Parser
         $this->current();
     }
 
+    /**
+     * Return char under cursor
+     *
+     * @return char
+     */
     private function current()
     {
         $this->debug('Current: ' . $this->serialized[$this->currentIndex]);
@@ -212,12 +247,23 @@ class Parser
         return $this->serialized[$this->currentIndex];
     }
 
+    /**
+     * Peek $offset characters ahead of cursor
+     *
+     * @param int $offset
+     * @return char
+     */
     private function peek($offset = 1)
     {
         $this->assertInBounds($offset);
         return $this->serialized[$this->currentIndex + $offset];
     }
 
+    /**
+     * Assert $offset is in bounds from current cursor position
+     *
+     * @param int $offset
+     */
     private function assertInBounds($offset)
     {
         if ($this->currentIndex + $offset >= $this->maxIndex) {
@@ -232,6 +278,11 @@ class Parser
         }
     }
 
+    /**
+     * Output debug message, if debugging is enabled
+     *
+     * @param string $message
+     */
     private function debug($message)
     {
         if ($this->debug) {
