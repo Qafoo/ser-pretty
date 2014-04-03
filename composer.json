@@ -3,7 +3,6 @@
     "description": "Pretty print serialized PHP data",
     "homepage": "https://github.com/Qafoo/ser-pretty",
     "license": "MIT",
-    "minimum-stability": "stable",
     "version": "1.0.0-alpha",
 
     "require-dev": {
