@@ -71,8 +71,9 @@ class Parser
                 default:
                     throw new \RuntimeException(
                         sprintf(
-                            'Unknown data type "%s"',
-                            $dataType
+                            'Unknown data type "%s" at char %d',
+                            $dataType,
+                            $this->currentIndex
                         )
                     );
             }
