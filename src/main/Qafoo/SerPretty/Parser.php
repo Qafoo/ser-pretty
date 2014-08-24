@@ -190,12 +190,12 @@ class Parser
             $this->debug('Array: Parsing element ' . $i);
 
             $key = $this->doParse();
-            $this->debug('Array: Parsed key "' . $key . '"');
+            $this->debug('Array: Parsed key "' . $key->getContent() . '"');
 
             $this->advance();
 
             $value = $this->doParse();
-            $this->debug('Array: Parsed value "' . $value . '"');
+            $this->debug('Array: Parsed value of type "' . gettype($value->getContent()) . '"');
 
             $this->advance();
 
