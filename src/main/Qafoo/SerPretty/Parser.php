@@ -69,13 +69,11 @@ class Parser
                     return $this->parseBoolean();
 
                 default:
-                    throw new \RuntimeException(
-                        sprintf(
-                            'Unknown data type "%s" at char %d',
-                            $dataType,
-                            $this->currentIndex
-                        )
+                    $this->raiseError(
+                        'Unknown data type "%s"',
+                        $dataType
                     );
+                    break;
             }
         }
     }
@@ -347,5 +345,22 @@ class Parser
         if ($this->debug) {
             echo "$message\n";
         }
+    }
+
+    /**
+     * @param string $message
+     * @param ... $parameters
+     */
+    private function raiseError($message)
+    {
+        $errorMessage = call_user_func_array('sprintf', func_get_args());
+
+        $context = sprintf(
+            'char #%d, context: …%s…',
+            $this->currentIndex,
+            substr($this->serialized, $this->currentIndex, 7)
+        );
+
+        throw new \RuntimeException(sprintf('%s (%s)', $errorMessage, $context));
     }
 }
