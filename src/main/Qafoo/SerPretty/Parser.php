@@ -340,7 +340,7 @@ class Parser
     private function debug($message)
     {
         if ($this->debug) {
-            echo "$message\n";
+            printf("%s (%s)\n", $message, $this->getContext());
         }
     }
 
@@ -352,12 +352,15 @@ class Parser
     {
         $errorMessage = call_user_func_array('sprintf', func_get_args());
 
-        $context = sprintf(
+        return sprintf('%s (%s)', $errorMessage, $this->getContext());
+    }
+
+    private function getContext()
+    {
+        return sprintf(
             'char #%d, context: …%s…',
             $this->currentIndex,
             substr($this->serialized, $this->currentIndex, 7)
         );
-
-        return sprintf('%s (%s)', $errorMessage, $context);
     }
 }
