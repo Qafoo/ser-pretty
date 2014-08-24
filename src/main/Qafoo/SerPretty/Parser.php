@@ -92,7 +92,7 @@ class Parser
         $string = $this->parseRawString();
 
         $this->debug('String: Skip ";"');
-        $this->advance(2);
+        $this->advance(1);
 
         $this->debug('String: Parsed "' . $string . '"');
 
@@ -100,6 +100,8 @@ class Parser
     }
 
     /**
+     * s:0:"";
+     *
      * @return string
      */
     private function parseRawString()
@@ -112,10 +114,10 @@ class Parser
         $this->advance(3);
 
         $this->debug('Raw String: Consuming ' . $stringLength . ' bytes');
-        $string = $this->current();
-        for ($i = 1; $i < $stringLength; $i++) {
-            $this->advance();
+        $string = '';
+        for ($i = 0; $i < $stringLength; $i++) {
             $string .= $this->current();
+            $this->advance();
         }
         $this->debug('Raw String: Parsed "' . $string . '"');
 
@@ -218,7 +220,7 @@ class Parser
         $this->debug('Object: Class name is "' . $className . '"');
 
         $this->debug('Object: Skipping "":"');
-        $this->advance(3);
+        $this->advance(2);
 
         $numAttributes = $this->parseRawInt();
         $this->debug('Object: Has ' . $numAttributes . ' attributes');

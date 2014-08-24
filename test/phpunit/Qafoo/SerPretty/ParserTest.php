@@ -40,6 +40,14 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testParseEmptyString()
+    {
+        $this->assertEquals(
+            new Node\StringNode(''),
+            $this->parser->parse(serialize(''))
+        );
+    }
+
     public function testParseInteger()
     {
         $this->assertEquals(
