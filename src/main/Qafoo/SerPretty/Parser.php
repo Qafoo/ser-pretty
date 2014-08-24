@@ -323,9 +323,8 @@ class Parser
     {
         if ($this->currentIndex + $offset >= $this->maxIndex) {
             throw new \OutOfBoundsException(
-                sprintf(
-                    'Current: %s, Offset: %s, Max: %s',
-                    $this->currentIndex,
+                $this->errorMessage(
+                    'Offset: %s, Max: %s',
                     $offset,
                     $this->maxIndex
                 )
