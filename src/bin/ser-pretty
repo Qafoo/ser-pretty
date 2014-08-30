@@ -18,6 +18,7 @@ if ((!$loader = includeIfExists(__DIR__.'/../../vendor/autoload.php')) && (!$loa
     exit(1);
 }
 
+$preProcessor = new PreProcessor\DoctrineAnnotationCachePreProcessor();
 $parser = new Parser();
 $writer = new Writer\SimpleTextWriter();
 
@@ -27,5 +28,6 @@ if (!empty($_SERVER['argv'][1])) {
     $contents = file_get_contents('php://stdin');
 }
 
+$contents = $preProcessor->process($contents);
 $node = $parser->parse($contents);
 echo $writer->write($node) . "\n";
