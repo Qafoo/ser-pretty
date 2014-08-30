@@ -97,4 +97,17 @@ class SimpleTextWriterTest extends \PHPUnit_Framework_TestCase
             )
         );
     }
+
+    public function testWriteSerializableObject()
+    {
+        $this->assertEquals(
+            "class Qafoo\SerPretty\SerializableTestClass (custom) {\n  int(23)\n}",
+            $this->writer->write(
+                new Node\SerializableObjectNode(
+                    new Node\IntegerNode(23),
+                    'Qafoo\\SerPretty\\SerializableTestClass'
+                )
+            )
+        );
+    }
 }

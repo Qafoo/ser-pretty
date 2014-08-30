@@ -31,6 +31,9 @@ class SimpleTextWriter extends Writer
             case 'Qafoo\\SerPretty\\Node\\BooleanNode':
                 return $this->writeBoolean($node);
 
+            case 'Qafoo\\SerPretty\\Node\\SerializableObjectNode':
+                return $this->writeSerializableObject($node);
+
             default:
                 throw new \RuntimeException(
                     sprintf(
@@ -148,6 +151,21 @@ class SimpleTextWriter extends Writer
             $class === null ? 'private' : 'public',
             $property,
             $this->write($val)
+        );
+    }
+
+    /**
+     * @param Qafoo\SerPretty\Node\SerializableObjectNode $objectNode
+     * @return string
+     */
+    private function writeSerializableObject(Node\SerializableObjectNode $objectNode)
+    {
+        return sprintf(
+            "class %s (custom) {\n%s\n}",
+            $objectNode->getClassName(),
+            $this->indent(
+                $this->write($objectNode->getContent())
+            )
         );
     }
 
