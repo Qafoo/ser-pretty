@@ -243,4 +243,44 @@ class ParserTest extends \PHPUnit_Framework_TestCase
             $this->parser->parse(serialize($complexObject))
         );
     }
+
+    public function testParseSerializableObject()
+    {
+        $serializableObject = new SerializableTestClass();
+
+        $this->assertEquals(
+            new Node\SerializableObjectNode(
+                new Node\IntegerNode(23),
+                'Qafoo\\SerPretty\\SerializableTestClass'
+            ),
+            $this->parser->parse(serialize($serializableObject))
+        );
+    }
+
+    public function testParseSerializableObjectInCombination()
+    {
+        $arrayWithSerializable = array(
+            'foo' => new SerializableTestClass(),
+            'bar' => 'b'
+        );
+
+        $this->assertEquals(
+            new Node\ArrayNode(
+                array(
+                    new Node\ArrayElementNode(
+                        new Node\SerializableObjectNode(
+                            new Node\IntegerNode(23),
+                            'Qafoo\\SerPretty\\SerializableTestClass'
+                        ),
+                        new Node\StringNode('foo')
+                    ),
+                    new Node\ArrayElementNode(
+                        new Node\StringNode('b'),
+                        new Node\StringNode('bar')
+                    )
+                )
+            ),
+            $this->parser->parse(serialize($arrayWithSerializable))
+        );
+    }
 }

@@ -70,6 +70,8 @@ class Parser
                     return $this->parseNull();
                 case 'b':
                     return $this->parseBoolean();
+                case 'C':
+                    return $this->parseSerializableObject();
 
                 default:
                     throw new \RuntimeException(
@@ -308,6 +310,36 @@ class Parser
         $this->debug('Raw Int: Parsed ' . $integer);
 
         return (int) $integer;
+    }
+
+    /**
+     * C:37:"Qafoo\SerPretty\SerializableTestClass":5:{i:23;}
+     *
+     * @return Node\
+     */
+    private function parseSerializableObject()
+    {
+        $this->debug('Serializable: Skipping ":"');
+        $this->advance(2);
+
+        $className = $this->parseRawString();
+        $this->debug('Serializable: Class name is "' . $className . '"');
+
+        $this->debug('Serializable: Skipping ":"');
+        $this->advance(2);
+
+        // Not needed, we just parse the content
+        $contentLength = $this->parseRawInt();
+
+        $this->debug('Serializable: Skipping ":{"');
+        $this->advance(3);
+
+        $content = $this->doParse();
+
+        $this->debug('Serializable: Skipping "}"');
+        $this->advance(1);
+
+        return new Node\SerializableObjectNode($content, $className);
     }
 
     /**

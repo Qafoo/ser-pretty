@@ -1,15 +1,14 @@
 <?php
 
 namespace Qafoo\SerPretty\Node;
-
 use Qafoo\SerPretty\Node;
 
-class ObjectNode extends Node
+class SerializableObjectNode extends Node
 {
     /**
-     * @var array
+     * @var mixed
      */
-    private $attributes;
+    private $content;
 
     /**
      * @var string
@@ -17,18 +16,20 @@ class ObjectNode extends Node
     private $className;
 
     /**
-     * @param array $attributes
-     * @param string $className
+     * @param mixed $content
      */
-    public function __construct(array $attributes, $className)
+    public function __construct($content, $className)
     {
-        $this->attributes = $attributes;
+        $this->content = $content;
         $this->className = $className;
     }
 
+    /**
+     * @return mixed
+     */
     public function getContent()
     {
-        return $this->attributes;
+        return $this->content;
     }
 
     public function getClassName()
