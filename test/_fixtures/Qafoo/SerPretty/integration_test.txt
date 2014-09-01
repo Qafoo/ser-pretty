@@ -1,0 +1,89 @@
+class Qafoo\SerPretty\Node\ObjectNode (2) {
+  public $attributes =>
+  array(2) {
+    [0] =>
+    class Qafoo\SerPretty\Node\AttributeNode (3) {
+      public $content =>
+      class Qafoo\SerPretty\Node\ObjectNode (2) {
+        public $attributes =>
+        array(2) {
+          [0] =>
+          class Qafoo\SerPretty\Node\AttributeNode (3) {
+            public $content =>
+            class Qafoo\SerPretty\Node\ArrayNode (1) {
+              public $content =>
+              array(2) {
+                [0] =>
+                class Qafoo\SerPretty\Node\ArrayElementNode (2) {
+                  public $content =>
+                  class Qafoo\SerPretty\Node\StringNode (1) {
+                    public $content =>
+                    string(6) "foobar"
+                  }
+                  public $key =>
+                  class Qafoo\SerPretty\Node\IntegerNode (1) {
+                    public $content =>
+                    int(0)
+                  }
+                }
+                [1] =>
+                class Qafoo\SerPretty\Node\ArrayElementNode (2) {
+                  public $content =>
+                  class Qafoo\SerPretty\Node\StringNode (1) {
+                    public $content =>
+                    string(3) "bar"
+                  }
+                  public $key =>
+                  class Qafoo\SerPretty\Node\StringNode (1) {
+                    public $content =>
+                    string(3) "foo"
+                  }
+                }
+              }
+            }
+            public $propertyName =>
+            string(3) "foo"
+            public $className =>
+            string(25) "Qafoo\SerPretty\TestClass"
+          }
+          [1] =>
+          class Qafoo\SerPretty\Node\AttributeNode (3) {
+            public $content =>
+            class Qafoo\SerPretty\Node\ObjectNode (2) {
+              public $attributes =>
+              array(0) {
+                
+              }
+              public $className =>
+              string(8) "stdClass"
+            }
+            public $propertyName =>
+            string(3) "bar"
+            public $className =>
+            null
+          }
+        }
+        public $className =>
+        string(25) "Qafoo\SerPretty\TestClass"
+      }
+      public $propertyName =>
+      string(3) "foo"
+      public $className =>
+      string(25) "Qafoo\SerPretty\TestClass"
+    }
+    [1] =>
+    class Qafoo\SerPretty\Node\AttributeNode (3) {
+      public $content =>
+      class Qafoo\SerPretty\Node\IntegerNode (1) {
+        public $content =>
+        int(23)
+      }
+      public $propertyName =>
+      string(3) "bar"
+      public $className =>
+      null
+    }
+  }
+  public $className =>
+  string(25) "Qafoo\SerPretty\TestClass"
+}
