@@ -167,12 +167,14 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                     new Node\AttributeNode(
                         new Node\IntegerNode(23),
                         'Qafoo\SerPretty\TestClass',
-                        'foo'
+                        'foo',
+                        Node\AttributeNode::SCOPE_PRIVATE
                     ),
                     new Node\AttributeNode(
                         new Node\StringNode('baz'),
                         null,
-                        'bar'
+                        'bar',
+                        Node\AttributeNode::SCOPE_PUBLIC
                     )
                 ),
                 'Qafoo\\SerPretty\\TestClass'
@@ -216,7 +218,8 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                                         )
                                     ),
                                     'Qafoo\SerPretty\TestClass',
-                                    'foo'
+                                    'foo',
+                                    Node\AttributeNode::SCOPE_PRIVATE
                                 ),
                                 new Node\AttributeNode(
                                     new Node\ObjectNode(
@@ -224,18 +227,21 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                                         'stdClass'
                                     ),
                                     null,
-                                    'bar'
+                                    'bar',
+                                    Node\AttributeNode::SCOPE_PUBLIC
                                 ),
                             ),
                             'Qafoo\\SerPretty\\TestClass'
                         ),
                         'Qafoo\SerPretty\TestClass',
-                        'foo'
+                        'foo',
+                        Node\AttributeNode::SCOPE_PRIVATE
                     ),
                     new Node\AttributeNode(
                         new Node\IntegerNode(23),
                         null,
-                        'bar'
+                        'bar',
+                        Node\AttributeNode::SCOPE_PUBLIC
                     )
                 ),
                 'Qafoo\\SerPretty\\TestClass'

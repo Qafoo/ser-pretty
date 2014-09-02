@@ -233,9 +233,10 @@ class Parser
         $attributes = array();
         for ($i = 0; $i < $numAttributes; $i++) {
             $this->debug('Object: Parse attribute #' . $i);
-            list($class, $name) = $this->parseAttributeName(
-                $this->doParse()
-            );
+            $rawAttributeName = $this->doParse();
+
+            list($class, $name) = $this->parseAttributeName($rawAttributeName);
+            $attributeScope = $this->parseAttributeScope($rawAttributeName);
 
             $this->advance();
 
@@ -243,7 +244,12 @@ class Parser
 
             $this->advance();
 
-            $attributes[] = new Node\AttributeNode($value, $class, $name);
+            $attributes[] = new Node\AttributeNode(
+                $value,
+                $class,
+                $name,
+                $attributeScope
+            );
         }
 
         return new Node\ObjectNode($attributes, $className);
@@ -292,6 +298,27 @@ class Parser
             null,
             $nameString
         );
+    }
+
+    /**
+     * @param Node\StringNode $stringNode
+     * @return Node\AttributeNode::SCOPE_*
+     */
+    private function parseAttributeScope(Node\StringNode $stringNode)
+    {
+        $nameString = $stringNode->getContent();
+
+        switch (true) {
+            // s:15:"*protectedFoo";s:9:"protected"
+            case (preg_match('(^\*\x00)', $nameString) === 1):
+                return Node\AttributeNode::SCOPE_PROTECTED;
+
+            case (strpos($nameString, "\000") !== false):
+                return Node\AttributeNode::SCOPE_PRIVATE;
+
+            default:
+                return Node\AttributeNode::SCOPE_PUBLIC;
+        }
     }
 
     /**
