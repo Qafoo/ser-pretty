@@ -144,11 +144,11 @@ class SimpleTextWriter extends Writer
         $class = $attributeNode->getClassName();
         $property = $attributeNode->getPropertyName();
         $val = $attributeNode->getContent();
+        $scope = $attributeNode->getScope();
 
-        // TODO: Detect protected by matching $class against serialized class name
         return sprintf(
             "%s $%s =>\n%s",
-            $class === null ? 'private' : 'public',
+            $scope,
             $property,
             $this->write($val)
         );

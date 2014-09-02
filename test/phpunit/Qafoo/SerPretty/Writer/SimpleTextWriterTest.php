@@ -77,19 +77,21 @@ class SimpleTextWriterTest extends \PHPUnit_Framework_TestCase
     public function testWriteObject()
     {
         $this->assertEquals(
-            "class Qafoo\SerPretty\TestClass (2) {\n  public \$foo =>\n  int(23)\n  private \$bar =>\n  string(3) \"baz\"\n}",
+            "class Qafoo\SerPretty\TestClass (2) {\n  private \$foo =>\n  int(23)\n  public \$bar =>\n  string(3) \"baz\"\n}",
             $this->writer->write(
                 new Node\ObjectNode(
                     array(
                         new Node\AttributeNode(
                             new Node\IntegerNode(23),
                             'Qafoo\SerPretty\TestClass',
-                            'foo'
+                            'foo',
+                            Node\AttributeNode::SCOPE_PRIVATE
                         ),
                         new Node\AttributeNode(
                             new Node\StringNode('baz'),
                             null,
-                            'bar'
+                            'bar',
+                            Node\AttributeNode::SCOPE_PUBLIC
                         )
                     ),
                     'Qafoo\\SerPretty\\TestClass'
