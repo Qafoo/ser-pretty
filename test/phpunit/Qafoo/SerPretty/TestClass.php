@@ -8,6 +8,8 @@ class TestClass
 
     public $bar = 'baz';
 
+    protected $baz = true;
+
     public function setFoo($fooValue)
     {
         $this->foo = $fooValue;
@@ -16,5 +18,10 @@ class TestClass
     public function setBar($barValue)
     {
         $this->bar = $barValue;
+    }
+
+    public function setBaz($bazValue)
+    {
+        $this->baz = $bazValue;
     }
 }

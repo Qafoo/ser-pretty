@@ -235,8 +235,7 @@ class Parser
             $this->debug('Object: Parse attribute #' . $i);
             $rawAttributeName = $this->doParse();
 
-            list($class, $name) = $this->parseAttributeName($rawAttributeName);
-            $attributeScope = $this->parseAttributeScope($rawAttributeName);
+            list($class, $name, $scope) = $this->parseAttributeName($rawAttributeName);
 
             $this->advance();
 
@@ -248,7 +247,7 @@ class Parser
                 $value,
                 $class,
                 $name,
-                $attributeScope
+                $scope
             );
         }
 
@@ -276,49 +275,26 @@ class Parser
 
     /**
      * @param Node\StringNode $stringNode
-     * @return [<string|null>, <string>]
+     * @return [<string|null>, <string>, Node\ObjectNode::SCOPE_*]
      */
     private function parseAttributeName(Node\StringNode $stringNode)
     {
         $nameString = $stringNode->getContent();
         $this->debug('Attribute Name: Parse from "' . $nameString . '"');
 
-        if (substr($nameString, 0, 1) === "\0") {
-            $nameString = substr($nameString, 1);
-        }
-
-        if (strpos($nameString, "\0")) {
+        if (preg_match('(^\x0([^\x0]+)\x0(.*)$)', $nameString, $matches)) {
             return array(
-                substr($nameString, 0, strpos($nameString, "\000")),
-                substr($nameString, strpos($nameString, "\000") + 1)
+                $matches[1],
+                $matches[2],
+                $matches[1] === '*' ? Node\AttributeNode::SCOPE_PROTECTED : Node\AttributeNode::SCOPE_PRIVATE
             );
         }
 
         return array(
             null,
-            $nameString
+            $nameString,
+            Node\AttributeNode::SCOPE_PUBLIC
         );
-    }
-
-    /**
-     * @param Node\StringNode $stringNode
-     * @return Node\AttributeNode::SCOPE_*
-     */
-    private function parseAttributeScope(Node\StringNode $stringNode)
-    {
-        $nameString = $stringNode->getContent();
-
-        switch (true) {
-            // s:15:"*protectedFoo";s:9:"protected"
-            case (preg_match('(^\*\x00)', $nameString) === 1):
-                return Node\AttributeNode::SCOPE_PROTECTED;
-
-            case (strpos($nameString, "\000") !== false):
-                return Node\AttributeNode::SCOPE_PRIVATE;
-
-            default:
-                return Node\AttributeNode::SCOPE_PUBLIC;
-        }
     }
 
     /**

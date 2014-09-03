@@ -175,6 +175,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                         null,
                         'bar',
                         Node\AttributeNode::SCOPE_PUBLIC
+                    ),
+                    new Node\AttributeNode(
+                        new Node\BooleanNode(true),
+                        '*',
+                        'baz',
+                        Node\AttributeNode::SCOPE_PROTECTED
                     )
                 ),
                 'Qafoo\\SerPretty\\TestClass'
@@ -230,6 +236,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                                     'bar',
                                     Node\AttributeNode::SCOPE_PUBLIC
                                 ),
+                                new Node\AttributeNode(
+                                    new Node\BooleanNode(true),
+                                    '*',
+                                    'baz',
+                                    Node\AttributeNode::SCOPE_PROTECTED
+                                )
                             ),
                             'Qafoo\\SerPretty\\TestClass'
                         ),
@@ -242,6 +254,12 @@ class ParserTest extends \PHPUnit_Framework_TestCase
                         null,
                         'bar',
                         Node\AttributeNode::SCOPE_PUBLIC
+                    ),
+                    new Node\AttributeNode(
+                        new Node\BooleanNode(true),
+                        '*',
+                        'baz',
+                        Node\AttributeNode::SCOPE_PROTECTED
                     )
                 ),
                 'Qafoo\\SerPretty\\TestClass'
