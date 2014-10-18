@@ -34,6 +34,9 @@ class SimpleTextWriter extends Writer
             case 'Qafoo\\SerPretty\\Node\\SerializableObjectNode':
                 return $this->writeSerializableObject($node);
 
+            case 'Qafoo\\SerPretty\\Node\\ReferenceNode':
+                return $this->writeReference($node);
+
             default:
                 throw new \RuntimeException(
                     sprintf(
@@ -151,6 +154,18 @@ class SimpleTextWriter extends Writer
             $scope,
             $property,
             $this->write($val)
+        );
+    }
+
+    /**
+     * @param Node\ReferenceNode $objectNode
+     * @return string
+     */
+    private function writeReference(Node\ReferenceNode $objectNode)
+    {
+        return sprintf(
+            "reference to %d",
+            $objectNode->getContent()
         );
     }
 

@@ -70,6 +70,8 @@ class Parser
                     return $this->parseNull();
                 case 'b':
                     return $this->parseBoolean();
+                case 'r':
+                    return $this->parseReference();
                 case 'C':
                     return $this->parseSerializableObject();
 
@@ -141,6 +143,23 @@ class Parser
         $this->advance(1);
 
         return new Node\IntegerNode($integer);
+    }
+
+    /**
+     * r:66;
+     *
+     * @return Node\ReferenceNode
+     */
+    private function parseReference()
+    {
+        $this->debug('Reference: Skip "r:"');
+        $this->advance(2);
+
+        $reference = $this->parseRawInt();
+
+        $this->advance(1);
+
+        return new Node\ReferenceNode($reference);
     }
 
     /**
