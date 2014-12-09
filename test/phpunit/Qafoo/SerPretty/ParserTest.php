@@ -163,9 +163,7 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         $testObj->a = 1;
         $refObj = new \stdClass();
         $refObj->ref = $testObj;
-        $this->parser = new Parser(TRUE);
 
-        echo serialize(array($refObj, $testObj));
         $this->assertEquals(
             new Node\ArrayNode(
                 array(
