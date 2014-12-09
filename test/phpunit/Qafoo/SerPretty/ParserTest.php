@@ -157,6 +157,54 @@ class ParserTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    public function testParseObjectReference()
+    {
+        $testObj = new \stdClass();
+        $testObj->a = 1;
+        $refObj = new \stdClass();
+        $refObj->ref = $testObj;
+        $this->parser = new Parser(TRUE);
+
+        echo serialize(array($refObj, $testObj));
+        $this->assertEquals(
+            new Node\ArrayNode(
+                array(
+                    new Node\ArrayElementNode(
+                        new Node\ObjectNode(
+                            array(
+                                new Node\AttributeNode(
+                                    new Node\ObjectNode(
+                                        array(
+                                            new Node\AttributeNode(
+                                                new Node\IntegerNode(1),
+                                                null,
+                                                'a',
+                                                Node\AttributeNode::SCOPE_PUBLIC
+                                            )
+                                        ),
+                                        'stdClass'
+                                    ),
+                                    null,
+                                    'ref',
+                                    Node\AttributeNode::SCOPE_PUBLIC
+                                )
+                            ),
+                            'stdClass'
+                        ),
+                        new Node\IntegerNode(0)
+                    ),
+                    new Node\ArrayElementNode(
+                        new Node\ReferenceNode(3),
+                        new Node\IntegerNode(1)
+                    )
+                )
+            ),
+            $this->parser->parse(
+                serialize(array($refObj, $testObj))
+            )
+        );
+    }
+
     public function testParseObject()
     {
         $testObj = new TestClass();
