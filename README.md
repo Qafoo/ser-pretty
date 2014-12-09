@@ -1,5 +1,7 @@
 # ser-pretty
 
+[![Build Status](https://travis-ci.org/Qafoo/ser-pretty.svg?branch=master)](https://travis-ci.org/Qafoo/ser-pretty)
+
 **ser-pretty prints serialized PHP in the style of `var_dump()` without
 sourcing the required classes.**
 
