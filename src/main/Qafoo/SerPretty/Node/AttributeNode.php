@@ -32,7 +32,7 @@ class AttributeNode extends Node
 
     /**
      * @param Node $content
-     * @param Node $propertyName
+     * @param string $propertyName
      */
     public function __construct(Node $content, $className, $propertyName, $scope)
     {
