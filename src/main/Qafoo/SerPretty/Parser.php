@@ -350,18 +350,85 @@ class Parser
         $this->debug('Serializable: Skipping ":"');
         $this->advance(2);
 
-        // Not needed, we just parse the content
-        $contentLength = $this->parseRawInt();
+        $this->parseRawInt();
+
+        $this->advance(1);
 
         $this->debug('Serializable: Skipping ":{"');
-        $this->advance(3);
+        $this->advance(2);
 
-        $content = $this->doParse();
+        if ($this->current() == 'x') {
+
+            $this->advance(2);
+
+            $flagsOrCount = $this->parseInt();
+
+            $this->advance(1);
+
+            $attributeNodes = [];
+
+            if (!$flagsOrCount->getContent()) {
+
+                $attributeNodes[] = new Node\AttributeNode(
+                    $this->doParse(),
+                    null,
+                    '___items___',
+                    'public'
+                );
+
+                $this->advance(2);
+            } else {
+
+                $items = [];
+                for ($i = 0; $i != $flagsOrCount->getContent(); $i++) {
+
+                    $items[] = new Node\ArrayElementNode($this->doParse(), new Node\IntegerNode($i));
+                    $this->advance(2);
+                    $this->parseNull();
+                    $this->advance(2);
+                }
+
+                $attributeNodes[] = new Node\AttributeNode(
+                    new Node\ArrayNode($items),
+                    null,
+                    '___items___',
+                    'public'
+                );
+            }
+
+            if ($this->current() == 'm') {
+
+                $this->advance(2);
+
+                $attributes = $this->parseArray();
+
+                foreach ($attributes->getContent() as $attribute) {
+                    /* @var $attribute Node\ArrayElementNode */
+
+                    $attributeNodes[] = new Node\AttributeNode(
+                        $attribute->getContent(),
+                        null,
+                        $attribute->getKey()->getContent(),
+                        'public'
+                    );
+                }
+            }
+
+            $result = new Node\ObjectNode(
+                $attributeNodes,
+                $className
+            );
+        } else {
+
+            $content = $this->doParse();
+
+            $result = new Node\SerializableObjectNode($content, $className);
+        }
 
         $this->debug('Serializable: Skipping "}"');
         $this->advance(1);
 
-        return new Node\SerializableObjectNode($content, $className);
+        return $result;
     }
 
     /**
